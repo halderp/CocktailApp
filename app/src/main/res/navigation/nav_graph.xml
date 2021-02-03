@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/CocktailDetailFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.phalder.cocktailapp.home.HomeFragment"
+        android:label="@string/home_fragment_label"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/CocktailDetailFragment"
+        android:name="com.phalder.cocktailapp.details.CocktailDetailFragment"
+        android:label="CocktailDetailFragment"
+        tools:layout="@layout/fragment_cocktail_detail">
+    </fragment>
+
+</navigation>
