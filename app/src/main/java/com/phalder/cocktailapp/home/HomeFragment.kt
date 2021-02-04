@@ -37,12 +37,17 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.homeViewModel = viewModel
 
-        // observe the Random Cocktal
-        viewModel.randomCockTail.observe(viewLifecycleOwner, Observer {
+        // observe the Random Cocktail
+        viewModel.randomCockTailItem.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Timber.d(it.strDrink)
+                Timber.d(it.name)
             }
         })
+
+        // Buttons handling
+        binding.openRandomCocktailBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_HomeFragment_to_CocktailDetailFragment)
+        }
 
         return binding.root
     }

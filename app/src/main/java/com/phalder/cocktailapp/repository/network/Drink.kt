@@ -4,6 +4,7 @@ data class Drink(
     val dateModified: String,
     val idDrink: String,
     val strAlcoholic: String,
+    val strInstructions: String,
     val strCategory: String,
     val strCreativeCommonsConfirmed: String,
     val strDrink: String,
