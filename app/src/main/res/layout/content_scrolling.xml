@@ -1,17 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".details.CocktailDetailFragment"
-    tools:showIn="@layout/fragment_cocktail_detail">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+    <data>
 
-</androidx.core.widget.NestedScrollView>
+        <variable
+            name="secondarydetailVM"
+            type="com.phalder.cocktailapp.details.CocktailDetailViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".details.CocktailDetailFragment"
+        tools:showIn="@layout/fragment_cocktail_detail">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/name_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/name_header"
+                style="@style/TextAppearance.Header2" />
+
+            <TextView
+                android:id="@+id/name_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{secondarydetailVM.cockTailItem.name}"
+                style="@style/TextAppearance.Normal"/>
+
+            <TextView
+                android:id="@+id/category_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/category_header"
+                style="@style/TextAppearance.Header2" />
+
+            <TextView
+                android:id="@+id/category_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{secondarydetailVM.cockTailItem.category}"
+                style="@style/TextAppearance.Normal"/>
+
+            <TextView
+                android:id="@+id/alchoholic_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alchoholic_header"
+                style="@style/TextAppearance.Header2" />
+
+            <TextView
+                android:id="@+id/alchoholic_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{secondarydetailVM.cockTailItem.alchoholic}"
+                style="@style/TextAppearance.Normal"/>
+
+            <TextView
+                android:id="@+id/instruction_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/instruction_header"
+                style="@style/TextAppearance.Header2" />
+
+            <TextView
+                android:id="@+id/instruction_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{secondarydetailVM.cockTailItem.instruction}"
+                style="@style/TextAppearance.Normal"/>
+
+            <TextView
+                android:id="@+id/ingredients_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ingredients_header"
+                style="@style/TextAppearance.Header2" />
+
+            <TextView
+                android:id="@+id/ingredients_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{secondarydetailVM.createIngredientsMeasure()}"
+                style="@style/TextAppearance.Normal"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

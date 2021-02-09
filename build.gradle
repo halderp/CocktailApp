@@ -31,6 +31,8 @@ ext {
     okhttpVersion = '4.9.0'
     glideVersion = '4.12.0'
     coordinatorLayoutVersion='1.1.0'
+    roomVersion = '2.2.6'
+    gsonVersion = '2.8.5'
 }
 
 task clean(type: Delete) {

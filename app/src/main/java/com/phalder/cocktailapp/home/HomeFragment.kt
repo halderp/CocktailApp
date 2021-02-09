@@ -46,8 +46,17 @@ class HomeFragment : Fragment() {
 
         // Buttons handling
         binding.openRandomCocktailBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_HomeFragment_to_CocktailDetailFragment)
+        if (viewModel.randomCockTailItem.value != null)
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCocktailDetailFragment(
+                viewModel.randomCockTailItem.value!!,false
+            ))
         }
+
+        binding.openMyFavCocktailsBtn.setOnClickListener {
+            if (viewModel.randomCockTailItem.value != null)
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSavedCocktailFragment())
+        }
+
 
         return binding.root
     }

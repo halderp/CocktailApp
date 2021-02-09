@@ -9,6 +9,7 @@
     <string name="random_cocktal_img">randomCockTailImage</string>
     <string name="open_random_cocktail">Open Random Cocktail</string>
     <string name="open_myfav_cocktails">My Fav Cocktails</string>
+    <string name="instruction_header">Instruction</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -98,4 +99,10 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="name_header">Name</string>
+    <string name="category_header">Category</string>
+    <string name="alchoholic_header">Alchoholic</string>
+    <string name="ingredients_header">Ingredients</string>
+    <string name="item_saved_string">Cocktail has been saved</string>
+    <string name="item_deleted_string">Cocktail has been unsaved</string>
 </resources>

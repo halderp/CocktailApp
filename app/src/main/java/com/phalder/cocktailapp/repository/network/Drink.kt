@@ -1,7 +1,6 @@
 package com.phalder.cocktailapp.repository.network
 
 data class Drink(
-    val dateModified: String,
     val idDrink: String,
     val strAlcoholic: String,
     val strInstructions: String,

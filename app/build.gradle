@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
+    implementation "androidx.cardview:cardview:1.0.0"
 
     // Network Dependencies
     // moshi & retrofit
@@ -64,7 +65,15 @@ dependencies {
 
     // Glide for images
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+    // Room Dependencies
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    implementation "com.google.code.gson:gson:$gsonVersion"
 
     // Coordinator Layout
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorLayoutVersion"

@@ -4,13 +4,15 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.phalder.cocktailapp.repository.CockTailRepository
 import com.phalder.cocktailapp.repository.local.CockTailItem
+import com.phalder.cocktailapp.repository.local.CocktailDatabase
 import com.phalder.cocktailapp.repository.network.Drink
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application): AndroidViewModel(application) {
 
     // Database and Repository
-    private val cockTailRepository = CockTailRepository()
+    private val cocktailDatabase = CocktailDatabase.getInstance(application)
+    private val cockTailRepository = CockTailRepository(cocktailDatabase)
 
     // The internal MutableLiveData data & the public LiveData to capture Random Cocktail
     private val _randomCockTail = MutableLiveData<Drink>()
@@ -20,6 +22,7 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
         var ingredients = createIngredients(it)
         var measures = createmeasures(it)
         CockTailItem(
+            it.idDrink,
             it.strDrink,
             it.strInstructions,
             it.strCategory,
@@ -27,8 +30,7 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
             it.strAlcoholic,
             it.strGlass,
             ingredients,
-            measures,
-            it.idDrink
+            measures
         )
     }
 

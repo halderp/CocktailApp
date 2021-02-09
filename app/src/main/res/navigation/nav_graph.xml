@@ -12,13 +12,44 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_HomeFragment_to_CocktailDetailFragment"
-            app:destination="@id/CocktailDetailFragment" />
+            app:destination="@id/CocktailDetailFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_HomeFragment_to_savedCocktailFragment"
+            app:destination="@id/SavedCocktailFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
 
     <fragment
         android:id="@+id/CocktailDetailFragment"
         android:name="com.phalder.cocktailapp.details.CocktailDetailFragment"
         tools:layout="@layout/fragment_cocktail_detail">
+        <argument
+            android:name="cocktailItem"
+            app:argType="com.phalder.cocktailapp.repository.local.CockTailItem" />
+        <argument
+            android:name="isAvailableInDb"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SavedCocktailFragment"
+        android:name="com.phalder.cocktailapp.saved.SavedCocktailFragment"
+        android:label="saved_cocktail_fragment"
+        tools:layout="@layout/saved_cocktail_fragment" >
+        <action
+            android:id="@+id/action_SavedCocktailFragment_to_CocktailDetailFragment"
+            app:destination="@id/CocktailDetailFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right"/>
     </fragment>
 
 </navigation>

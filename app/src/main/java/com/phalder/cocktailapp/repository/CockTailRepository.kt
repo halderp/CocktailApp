@@ -1,13 +1,13 @@
 package com.phalder.cocktailapp.repository
 
+import com.phalder.cocktailapp.repository.local.CockTailItem
+import com.phalder.cocktailapp.repository.local.CocktailDatabase
 import com.phalder.cocktailapp.repository.network.CocktailApi
 import com.phalder.cocktailapp.repository.network.Drink
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import timber.log.Timber
 
-class CockTailRepository {
+// Repository takes Database as dependency
+class CockTailRepository(var cocktailDatabase: CocktailDatabase) {
 
     // This function gets the random cocktail
     suspend fun getRandomCocktail(): Drink? {
@@ -22,5 +22,17 @@ class CockTailRepository {
             Timber.e("CockTailRepository: Exception getRandomCocktail() --> " +  e.message)
         }
         return null
+    }
+
+    suspend fun insertFavCocktailItem(favCocktail : CockTailItem){
+        cocktailDatabase.cocktailDBDao().insertFavCocktailItem(favCocktail)
+    }
+
+    suspend fun deleteFavCocktailItem(favCocktail : CockTailItem){
+        cocktailDatabase.cocktailDBDao().deleteFavCocktailItem(favCocktail)
+    }
+
+    suspend fun getAllFavCocktailFromDB(): List<CockTailItem>{
+        return cocktailDatabase.cocktailDBDao().getAllFavCocktails()
     }
 }
