@@ -22,6 +22,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/updateImageBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_picture"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:visibility="@{secondarydetailVM.isAvailableInFavDB}"
+                app:cornerRadius="@dimen/btn_corner_radius" />
+
             <TextView
                 android:id="@+id/name_title"
                 android:layout_width="match_parent"
@@ -33,7 +43,7 @@
                 android:id="@+id/name_str"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{secondarydetailVM.cockTailItem.name}"
+                android:text="@{secondarydetailVM.cockTailItemLiveData.name}"
                 style="@style/TextAppearance.Normal"/>
 
             <TextView
@@ -47,7 +57,7 @@
                 android:id="@+id/category_str"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{secondarydetailVM.cockTailItem.category}"
+                android:text="@{secondarydetailVM.cockTailItemLiveData.category}"
                 style="@style/TextAppearance.Normal"/>
 
             <TextView
@@ -61,7 +71,7 @@
                 android:id="@+id/alchoholic_str"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{secondarydetailVM.cockTailItem.alchoholic}"
+                android:text="@{secondarydetailVM.cockTailItemLiveData.alchoholic}"
                 style="@style/TextAppearance.Normal"/>
 
             <TextView
@@ -75,7 +85,7 @@
                 android:id="@+id/instruction_str"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{secondarydetailVM.cockTailItem.instruction}"
+                android:text="@{secondarydetailVM.cockTailItemLiveData.instruction}"
                 style="@style/TextAppearance.Normal"/>
 
             <TextView

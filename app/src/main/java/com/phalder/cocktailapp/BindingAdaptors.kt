@@ -26,7 +26,8 @@ fun bindCocktailImage(cocktailImageView: ImageView, cocktailImgUrl: String?) {
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.default_img)
-                    .error(R.drawable.default_img))
+                    .error(R.drawable.default_img)
+            )
             .into(cocktailImageView)
     }
 }
@@ -34,11 +35,12 @@ fun bindCocktailImage(cocktailImageView: ImageView, cocktailImgUrl: String?) {
 @BindingAdapter("cocktailDetailImage")
 fun bindCocktailDetailImage(cocktailImageView: ImageView, cocktailImgUrl: String?) {
     cocktailImgUrl?.let {
-        val imgUri = it.toUri().buildUpon().scheme("https").build()
+        val imgUri = it.toUri()
         Glide.with(cocktailImageView.context)
             .load(imgUri)
             .apply(
-                RequestOptions())
+                RequestOptions()
+            )
             .into(cocktailImageView)
     }
 }
@@ -83,3 +85,9 @@ fun <T> setRecyclerViewData(recyclerView: RecyclerView, items: LiveData<List<T>>
         }
     }
 }
+
+@BindingAdapter("android:visibility")
+fun setVisibility(view: View, value: Boolean) {
+    view.visibility = if (value) View.VISIBLE else View.GONE
+}
+

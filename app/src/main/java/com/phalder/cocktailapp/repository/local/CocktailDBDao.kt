@@ -14,4 +14,7 @@ interface CocktailDBDao {
     @Query("SELECT * FROM fav_cocktail_table")
     suspend fun getAllFavCocktails(): List<CockTailItem>
 
+    @Update
+    suspend fun updateCocktailItemInDB(cockTailItem: CockTailItem)
+
 }

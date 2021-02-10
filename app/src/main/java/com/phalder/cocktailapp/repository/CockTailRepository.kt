@@ -35,4 +35,8 @@ class CockTailRepository(var cocktailDatabase: CocktailDatabase) {
     suspend fun getAllFavCocktailFromDB(): List<CockTailItem>{
         return cocktailDatabase.cocktailDBDao().getAllFavCocktails()
     }
+
+    suspend fun updateCocktailItem(cockTailItem: CockTailItem) {
+        cocktailDatabase.cocktailDBDao().updateCocktailItemInDB(cockTailItem)
+    }
 }

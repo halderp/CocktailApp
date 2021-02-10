@@ -33,6 +33,7 @@ ext {
     coordinatorLayoutVersion='1.1.0'
     roomVersion = '2.2.6'
     gsonVersion = '2.8.5'
+    cameraxVersion = '1.0.0-rc02'
 }
 
 task clean(type: Delete) {

@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    app:cocktailDetailImage="@{detailViewModel.cockTailItem.thumbnail}"
+                    app:cocktailDetailImage="@{detailViewModel.cockTailImgUrl}"
                     app:layout_collapseMode="parallax"
                     app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
 

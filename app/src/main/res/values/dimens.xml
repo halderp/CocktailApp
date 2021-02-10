@@ -7,5 +7,6 @@
     <dimen name="view_margin_low">16dp</dimen>
     <dimen name="view_margin_very_low">8dp</dimen>
     <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="btn_corner_radius">12dp</dimen>
     <dimen name="card_elevation">8dp</dimen>
 </resources>

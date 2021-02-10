@@ -105,4 +105,5 @@
     <string name="ingredients_header">Ingredients</string>
     <string name="item_saved_string">Cocktail has been saved</string>
     <string name="item_deleted_string">Cocktail has been unsaved</string>
+    <string name="update_picture">Update Picture</string>
 </resources>

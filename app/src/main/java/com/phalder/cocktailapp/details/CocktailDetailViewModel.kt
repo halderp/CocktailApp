@@ -14,7 +14,11 @@ import kotlinx.coroutines.launch
 
 class CocktailDetailViewModel(application: Application,cockTailItem: CockTailItem,isAvailableInDb:Boolean): AndroidViewModel(application) {
 
-    var cockTailItem: CockTailItem = cockTailItem
+    var cockTailItemLiveData: MutableLiveData<CockTailItem> = MutableLiveData(cockTailItem)
+    // The internal MutableLiveData data & the public LiveData to capture Picture of Day
+    private val _cockTailImgUrl = MutableLiveData<String>()
+    val cockTailImgUrl : LiveData<String>
+        get() =_cockTailImgUrl
 
     // Database and Repository
     private val cocktailDatabase = CocktailDatabase.getInstance(application)
@@ -30,13 +34,14 @@ class CocktailDetailViewModel(application: Application,cockTailItem: CockTailIte
 
     init {
         _isAvailableInFavDB.value = isAvailableInDb
+        _cockTailImgUrl.value = cockTailItemLiveData.value!!.thumbnail
     }
 
     fun createIngredientsMeasure(): String {
         var returnValue : String =""
         var count:Int = 0
-        for(ingredient in cockTailItem.ingredients){
-            val item = ingredient + " : " + cockTailItem.measures[count++]
+        for(ingredient in cockTailItemLiveData.value!!.ingredients){
+            val item = ingredient + " : " + cockTailItemLiveData.value!!.measures[count++]
             returnValue += item + "\n"
 
         }
@@ -46,16 +51,24 @@ class CocktailDetailViewModel(application: Application,cockTailItem: CockTailIte
     fun itemSaveUnsaveInFabDB() {
         if (_isAvailableInFavDB.value == false) {
             viewModelScope.launch {
-                cockTailRepository.insertFavCocktailItem(cockTailItem)
+                cockTailRepository.insertFavCocktailItem(cockTailItemLiveData.value!!)
             }
             _isAvailableInFavDB.value = true
             showSnackBarInt.value = R.string.item_saved_string
         } else {
             viewModelScope.launch {
-                cockTailRepository.deleteFavCocktailItem(cockTailItem)
+                cockTailRepository.deleteFavCocktailItem(cockTailItemLiveData.value!!)
             }
             _isAvailableInFavDB.value = false
             showSnackBarInt.value = R.string.item_deleted_string
+        }
+    }
+
+    fun updateCocktailImage(newImage: String){
+        viewModelScope.launch {
+            cockTailItemLiveData.value!!.thumbnail = newImage
+            cockTailRepository.updateCocktailItem(cockTailItemLiveData.value!!)
+            _cockTailImgUrl.value = cockTailItemLiveData.value!!.thumbnail
         }
     }
 }

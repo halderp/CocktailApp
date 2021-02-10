@@ -1,5 +1,7 @@
 package com.phalder.cocktailapp.details
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.phalder.cocktailapp.R
+import com.phalder.cocktailapp.camera.CameraCapture
 import com.phalder.cocktailapp.databinding.FragmentCocktailDetailBinding
 import timber.log.Timber
 
@@ -24,6 +27,8 @@ class CocktailDetailFragment : Fragment() {
     private lateinit var binding: FragmentCocktailDetailBinding
     //View Model
     private lateinit var viewModel: CocktailDetailViewModel
+
+    private val CAPTURE_PHOTO_REQUEST = 1
 
     override fun onCreateView(inflater: LayoutInflater,  container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {
@@ -47,6 +52,11 @@ class CocktailDetailFragment : Fragment() {
             Snackbar.make(this.requireView(), getString(it), Snackbar.LENGTH_LONG).show()
         })
 
+        binding.secondaryLayout.updateImageBtn.setOnClickListener {
+            val intent = Intent(activity,CameraCapture::class.java)
+            startActivityForResult(intent ,CAPTURE_PHOTO_REQUEST)
+        }
+
         return binding.root
     }
 
@@ -59,5 +69,20 @@ class CocktailDetailFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
 
         layout.setupWithNavController(toolbar, navController, appBarConfiguration)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // 1
+        if (requestCode == CAPTURE_PHOTO_REQUEST) {
+            // 2
+            if (resultCode == Activity.RESULT_OK) {
+                // 3
+                val task = data?.getStringExtra(CameraCapture.EXTRA_PHOTO_DESCRIPTION)
+                task?.let {
+                    Timber.d(it)
+                    viewModel.updateCocktailImage(it)
+                }
+            }
+        }
     }
 }
