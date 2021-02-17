@@ -37,7 +37,7 @@
             android:layout_height="300dp"
             android:contentDescription="@string/random_cocktal_img"
             android:scaleType="centerCrop"
-            app:cocktailImage="@{homeViewModel.randomCockTailItem.thumbnail}"
+            app:cocktailImage="@{homeViewModel.cockTailImgUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

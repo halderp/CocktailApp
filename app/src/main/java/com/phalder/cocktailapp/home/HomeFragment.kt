@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.snackbar.Snackbar
 import com.phalder.cocktailapp.R
 import com.phalder.cocktailapp.databinding.FragmentHomeBinding
 import timber.log.Timber
@@ -30,8 +31,10 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -46,14 +49,23 @@ class HomeFragment : Fragment() {
 
         // Buttons handling
         binding.openRandomCocktailBtn.setOnClickListener {
-        if (viewModel.randomCockTailItem.value != null)
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCocktailDetailFragment(
-                viewModel.randomCockTailItem.value!!,false
-            ))
+            if (viewModel.randomCockTailItem.value != null) {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToCocktailDetailFragment(
+                        viewModel.randomCockTailItem.value!!, false
+                    )
+                )
+            } else {
+                Snackbar.make(
+                    binding.mainLayout,
+                    R.string.error_cannot_open,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
         }
 
         binding.openMyFavCocktailsBtn.setOnClickListener {
-            if (viewModel.randomCockTailItem.value != null)
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSavedCocktailFragment())
         }
 

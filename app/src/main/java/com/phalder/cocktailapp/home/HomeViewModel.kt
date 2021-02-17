@@ -10,6 +10,11 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application): AndroidViewModel(application) {
 
+    // The internal MutableLiveData data & the public LiveData to capture Picture of Day
+    private val _cockTailImgUrl = MutableLiveData<String>()
+    val cockTailImgUrl : LiveData<String>
+        get() =_cockTailImgUrl
+
     // Database and Repository
     private val cocktailDatabase = CocktailDatabase.getInstance(application)
     private val cockTailRepository = CockTailRepository(cocktailDatabase)
@@ -66,15 +71,22 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
 
     // initializer block
     init {
-        // setRandomPicOfTheDay()
+        setRandomPicOfTheDay()
        getRandomCockTail()
 
+    }
+
+    private fun setRandomPicOfTheDay() {
+        _cockTailImgUrl.value=""
     }
 
     private fun getRandomCockTail() {
         viewModelScope.launch {
             var drink =  cockTailRepository.getRandomCocktail()
-            _randomCockTail.value = drink
+            drink?.let {
+                _randomCockTail.value = it
+                _cockTailImgUrl.value = _randomCockTail.value!!.strDrinkThumb
+            }
         }
     }
 
