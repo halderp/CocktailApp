@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.phalder.cocktailapp.repository.CockTailRepository
 import com.phalder.cocktailapp.repository.local.CockTailItem
 import com.phalder.cocktailapp.repository.local.CocktailDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SavedCocktailViewModel(application: Application): AndroidViewModel(application) {
 
@@ -29,10 +31,13 @@ class SavedCocktailViewModel(application: Application): AndroidViewModel(applica
      */
     fun loadSavedCocktails() {
 
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
             //Get the list from DB
             val result = cockTailRepository.getAllFavCocktailFromDB()
-            favCocktailList.value = result
+            withContext(Dispatchers.Main){
+                favCocktailList.value = result
+            }
+
        }
     }
 }

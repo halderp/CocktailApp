@@ -17,6 +17,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.phalder.cocktailapp.R
 import com.phalder.cocktailapp.camera.CameraCapture
+import com.phalder.cocktailapp.camera.PhotoViewActivity
 import com.phalder.cocktailapp.databinding.FragmentCocktailDetailBinding
 import timber.log.Timber
 
@@ -55,6 +56,12 @@ class CocktailDetailFragment : Fragment() {
         binding.secondaryLayout.updateImageBtn.setOnClickListener {
             val intent = Intent(activity,CameraCapture::class.java)
             startActivityForResult(intent ,CAPTURE_PHOTO_REQUEST)
+        }
+
+        binding.secondaryLayout.viewImageBtn.setOnClickListener {
+            val intent = Intent(activity,PhotoViewActivity::class.java)
+            intent.putExtra(CameraCapture.EXTRA_PHOTO_VIEW_URI, viewModel.cockTailImgUrl.value)
+            startActivity(intent)
         }
 
         return binding.root

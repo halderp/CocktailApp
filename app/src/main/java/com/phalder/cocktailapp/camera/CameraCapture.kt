@@ -7,14 +7,20 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.DisplayMetrics
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.phalder.cocktailapp.R
 import timber.log.Timber
 import java.io.File
@@ -28,6 +34,7 @@ import kotlin.math.min
 
 class CameraCapture : AppCompatActivity() {
 
+    private var savedUri: String = ""
     private var imageCapture: ImageCapture? = null
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
@@ -46,15 +53,64 @@ class CameraCapture : AppCompatActivity() {
             )
         }
 
+        if (savedInstanceState != null) {
+            savedUri = savedInstanceState.getString(KEY_PHOTO_URI,"")
+            if (!savedUri.isNullOrEmpty()){
+                setPhotoButtonDisplayView(Uri.parse(savedUri))
+                startMotionLayout()
+            }
+        }
+
         // Set up the listener for take photo button
         var camera_capture_button: Button = findViewById(R.id.camera_capture_button)
         camera_capture_button.setOnClickListener { takePhoto() }
+
+        // Set up the listener for done photo button
+        var done_photo_button: ImageButton = findViewById(R.id.photo_done_button)
+        done_photo_button.setOnClickListener { doneTakingPhoto() }
+
+        // Set up the listener for image view  button
+        var image_view_button: ImageButton = findViewById(R.id.photo_view_button)
+        image_view_button.setOnClickListener { openImageForDisplay() }
 
         viewFinder = findViewById(R.id.viewFinder)
 
         outputDirectory = getOutputDirectory()
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(KEY_PHOTO_URI, savedUri)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    private fun openImageForDisplay() {
+        if (!savedUri.isNullOrEmpty()) {
+            val photoViewIntent = Intent(this, PhotoViewActivity::class.java).apply {
+                putExtra(EXTRA_PHOTO_VIEW_URI, savedUri)
+            }
+            startActivity(photoViewIntent)
+        }
+    }
+
+
+    private fun doneTakingPhoto() {
+
+        if (savedUri.isNullOrEmpty()) {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        } else {
+            val result = Intent()
+            result.putExtra(EXTRA_PHOTO_DESCRIPTION, savedUri)
+            setResult(Activity.RESULT_OK, result)
+            finish()
+        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -103,14 +159,14 @@ class CameraCapture : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
-                    val msg = "Photo capture succeeded: $savedUri"
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
+                    savedUri = Uri.fromFile(photoFile).toString()
+                    // update the thumbnail image view
+                    setPhotoButtonDisplayView(Uri.fromFile(photoFile))
+                    startMotionLayout()
 
-                    val result = Intent()
-                    result.putExtra(EXTRA_PHOTO_DESCRIPTION, savedUri.toString())
-                    setResult(Activity.RESULT_OK, result)
-                    finish()
+                   /* val msg = "Photo capture succeeded: $savedUri"
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show() */
+
                 }
             })
     }
@@ -157,7 +213,7 @@ class CameraCapture : AppCompatActivity() {
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview,imageCapture
+                    this, cameraSelector, preview, imageCapture
                 )
 
             } catch (exc: Exception) {
@@ -194,6 +250,33 @@ class CameraCapture : AppCompatActivity() {
         cameraExecutor.shutdown()
     }
 
+
+    private fun setPhotoButtonDisplayView(uri: Uri) {
+        val photoImageView = findViewById<ImageView>(R.id.photo_view_button)
+        photoImageView.post {
+            // Load thumbnail into circular button using Glide
+            Glide.with(photoImageView)
+                .load(uri)
+                .apply(RequestOptions())
+                .into(photoImageView)
+        }
+    }
+
+    private fun startMotionLayout() {
+        // Start Motion Layout Transition
+        val mainMotionLayout = findViewById<MotionLayout>(R.id.mainMotionLayout)
+        mainMotionLayout.transitionToEnd()
+
+        val photoDoneButton = findViewById<ImageView>(R.id.photo_done_button)
+        photoDoneButton.post {
+            // Load thumbnail into circular button using Glide
+            Glide.with(photoDoneButton)
+                .load(R.drawable.ic_save_button)
+                .apply(RequestOptions())
+                .into(photoDoneButton)
+        }
+    }
+
     companion object {
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
@@ -202,5 +285,7 @@ class CameraCapture : AppCompatActivity() {
         private const val RATIO_16_9_VALUE = 16.0 / 9.0
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         val EXTRA_PHOTO_DESCRIPTION = "photo"
+        val EXTRA_PHOTO_VIEW_URI = "photoview"
+        val KEY_PHOTO_URI = "photouri"
     }
 }

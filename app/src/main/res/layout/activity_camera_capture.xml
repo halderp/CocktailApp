@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EA80FC"
+    android:id="@+id/mainMotionLayout"
+    app:layoutDescription="@xml/activity_camera_capture_scene"
     tools:context=".camera.CameraCapture">
+
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </androidx.camera.view.PreviewView>
 
     <Button
         android:id="@+id/camera_capture_button"
@@ -23,4 +30,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/photo_view_button"
+        android:layout_width="@dimen/round_button_medium"
+        android:layout_height="@dimen/round_button_medium"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_xlarge"
+        android:contentDescription="@string/gallery_button_alt"
+        android:background="@drawable/ic_outer_circle"
+        android:padding="@dimen/spacing_large"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_photo" />
+
+    <ImageButton
+        android:id="@+id/photo_done_button"
+        android:layout_width="@dimen/round_button_medium"
+        android:layout_height="@dimen/round_button_medium"
+        android:background="@drawable/ic_outer_circle"
+        android:contentDescription="@string/done_button_alt"
+        android:padding="@dimen/spacing_large"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

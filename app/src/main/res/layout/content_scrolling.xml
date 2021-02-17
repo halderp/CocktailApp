@@ -32,6 +32,14 @@
                 android:visibility="@{secondarydetailVM.isAvailableInFavDB}"
                 app:cornerRadius="@dimen/btn_corner_radius" />
 
+            <Button
+                android:id="@+id/viewImageBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_picture"
+                android:layout_gravity="center_vertical|center_horizontal"
+                app:cornerRadius="@dimen/btn_corner_radius" />
+
             <TextView
                 android:id="@+id/name_title"
                 android:layout_width="match_parent"
